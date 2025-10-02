@@ -25,3 +25,18 @@ mod tests {
         assert_eq!(a, v[..]);
     }
 }
+
+
+fn main() {
+    let (a, v) = array_and_vec();
+
+    println!("Array:");
+    for val in a.iter() {
+        println!("{}", val);
+    }
+
+    println!("Vector:");
+    for val in v.iter() {
+        println!("{}", val);
+    }
+}
