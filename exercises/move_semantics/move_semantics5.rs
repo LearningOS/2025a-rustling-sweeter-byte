@@ -8,10 +8,14 @@
 
 
 fn main() {
+    // 可变借用
     let mut x = 100;
     let y = &mut x;
     *y += 100;
+    println!("y = {}", y);
     let z = &mut x;
     *z += 1000;
+    println!("z = {}", z);
     assert_eq!(x, 1200);
+    println!("x = {}", x);
 }
