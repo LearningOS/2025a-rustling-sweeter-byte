@@ -52,3 +52,15 @@ mod tests {
         assert_eq!(animal_habitat("dinosaur"), "Unknown")
     }
 }
+
+fn main() {
+    let animal1 = "gopher";
+    let animal2 = "snake";
+    let animal3 = "crab";
+    let animal4 = "disnosaur";
+
+    println!("{}",animal_habitat(animal1));
+    println!("{}",animal_habitat(animal2));
+    println!("{}",animal_habitat(animal3));
+    println!("{}",animal_habitat(animal4));
+}

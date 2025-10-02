@@ -31,3 +31,9 @@ mod tests {
         assert_eq!(42, bigger(32, 42));
     }
 }
+
+fn main() {
+    let a = 5;
+    let b = 7;
+    println!("The bigger one is {}",bigger(a,b));
+}

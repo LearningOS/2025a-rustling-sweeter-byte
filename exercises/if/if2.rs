@@ -36,3 +36,13 @@ mod tests {
         assert_eq!(foo_if_fizz("literally anything"), "baz")
     }
 }
+
+fn main() {
+    let str1 = "fizz";
+    let str2 = "fuzz";
+    let str3 = "anything else";
+    println!("{}", foo_if_fizz(str1));
+    println!("{}", foo_if_fizz(str2));
+    println!("{}", foo_if_fizz(str3));
+
+}
