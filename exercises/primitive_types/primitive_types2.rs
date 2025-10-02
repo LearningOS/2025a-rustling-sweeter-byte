@@ -9,6 +9,9 @@
 
 fn main() {
     // Characters (`char`)
+    // Key:
+    // '': char
+    // "": &str
 
     // Note the _single_ quotes, these are different from the double quotes
     // you've been seeing around.
@@ -27,6 +30,39 @@ fn main() {
     if your_character.is_alphabetic() {
         println!("Alphabetical!");
     } else if your_character.is_numeric() {
+        println!("Numerical!");
+    } else {
+        println!("Neither alphabetic nor numeric!");
+    }
+
+    let your_character_1 = '开';// Finish this line like the example! What's your favorite character?
+    // Try a letter, try a number, try a special character, try a character
+    // from a different language than your own, try an emoji!
+    if your_character_1.is_alphabetic() {
+        println!("Alphabetical!");
+    } else if your_character_1.is_numeric() {
+        println!("Numerical!");
+    } else {
+        println!("Neither alphabetic nor numeric!");
+    }
+
+    let your_character_2 = '5';// Finish this line like the example! What's your favorite character?
+    // Try a letter, try a number, try a special character, try a character
+    // from a different language than your own, try an emoji!
+    if your_character_2.is_alphabetic() {
+        println!("Alphabetical!");
+    } else if your_character_2.is_numeric() {
+        println!("Numerical!");
+    } else {
+        println!("Neither alphabetic nor numeric!");
+    }
+
+    let your_character_3 = '😊';// Finish this line like the example! What's your favorite character?
+    // Try a letter, try a number, try a special character, try a character
+    // from a different language than your own, try an emoji!
+    if your_character_3.is_alphabetic() {
+        println!("Alphabetical!");
+    } else if your_character_3.is_numeric() {
         println!("Numerical!");
     } else {
         println!("Neither alphabetic nor numeric!");

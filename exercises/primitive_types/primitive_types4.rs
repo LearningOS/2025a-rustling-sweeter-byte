@@ -14,3 +14,12 @@ fn slice_out_of_array() {
 
     assert_eq!([2, 3, 4], nice_slice)
 }
+
+fn main() {
+    let a = [1, 2, 3, 4, 5];
+
+    let slice = &a[1..4];  // 取下标 1,2,3
+    
+    println!("{:?}", slice);  // 输出 [2, 3, 4]
+
+}
