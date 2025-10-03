@@ -29,12 +29,14 @@ impl Package {
         }
     }
 
-    fn is_international(&self) -> ??? {
+    fn is_international(&self) -> bool {
         // Something goes here...
+        self.sender_country != self.recipient_country
     }
 
-    fn get_fees(&self, cents_per_gram: i32) -> ??? {
+    fn get_fees(&self, cents_per_gram: i32) -> i32 {
         // Something goes here...
+        self.weight_in_grams * cents_per_gram
     }
 }
 
@@ -83,4 +85,15 @@ mod tests {
         assert_eq!(package.get_fees(cents_per_gram), 4500);
         assert_eq!(package.get_fees(cents_per_gram * 2), 9000);
     }
+}
+
+fn main() {
+    let sender_country = String::from("Spain");
+    let recipient_country = String::from("Spain");
+    let cents_per_gram = 3;
+    let package = Package::new(sender_country, recipient_country, 1500);
+    println!("{:#?}",package);
+
+    println!("Is International? [{}]", package.is_international());
+    println!("Get fees: {}", package.get_fees(cents_per_gram));
 }
