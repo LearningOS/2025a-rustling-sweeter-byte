@@ -13,7 +13,13 @@ fn maybe_icecream(time_of_day: u16) -> Option<u16> {
     // value of 0 The Option output should gracefully handle cases where
     // time_of_day > 23.
     // TODO: Complete the function body - remember to return an Option!
-    ???
+    if time_of_day > 23 {
+        None
+    } else if time_of_day < 22 {
+        Some(5)
+    } else {
+        Some(0)
+    }
 }
 
 #[cfg(test)]
@@ -33,7 +39,16 @@ mod tests {
     fn raw_value() {
         // TODO: Fix this test. How do you get at the value contained in the
         // Option?
-        let icecreams = maybe_icecream(12);
+        let icecreams = maybe_icecream(12).unwarp();
         assert_eq!(icecreams, 5);
+    }
+}
+
+fn main() {
+    for hour in 0..26 {
+        match maybe_icecream(hour) {
+            Some(amount) => println!("{}点: 冰激凌剩余 {} 个", hour, amount),
+            None => println!("{}点: 时间不合法！", hour),
+        }
     }
 }
