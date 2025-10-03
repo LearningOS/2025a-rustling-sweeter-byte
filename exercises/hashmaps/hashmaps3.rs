@@ -39,6 +39,19 @@ fn build_scores_table(results: String) -> HashMap<String, Team> {
         // will be the number of goals conceded from team_2, and similarly
         // goals scored by team_2 will be the number of goals conceded by
         // team_1.
+        let team1 = scores.entry(team_1_name.clone()).or_insert(Team {
+            goals_scored: 0,
+            goals_conceded: 0,
+        });
+        team1.goals_scored += team_1_score;
+        team1.goals_conceded += team_2_score;
+
+        let team2 = scores.entry(team_2_name.clone()).or_insert(Team {
+            goals_scored: 0,
+            goals_conceded: 0,
+        });
+        team2.goals_scored += team_2_score;
+        team2.goals_conceded += team_1_score;
     }
     scores
 }
@@ -82,5 +95,24 @@ mod tests {
         let team = scores.get("Spain").unwrap();
         assert_eq!(team.goals_scored, 0);
         assert_eq!(team.goals_conceded, 2);
+    }
+}
+
+
+fn main() {
+    let results = "".to_string()
+        + "England,France,4,2\n"
+        + "France,Italy,3,1\n"
+        + "Poland,Spain,2,0\n"
+        + "Germany,England,2,1\n";
+
+    let scores = build_scores_table(results);
+
+    println!("Soccer match scores table:");
+    for (team, record) in &scores {
+        println!(
+            "{} => Goals Scored: {}, Goals Conceded: {}",
+            team, record.goals_scored, record.goals_conceded
+        );
     }
 }

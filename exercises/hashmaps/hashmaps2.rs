@@ -18,7 +18,7 @@
 
 use std::collections::HashMap;
 
-#[derive(Hash, PartialEq, Eq)]
+#[derive(Debug, Hash, PartialEq, Eq)]
 enum Fruit {
     Apple,
     Banana,
@@ -40,7 +40,16 @@ fn fruit_basket(basket: &mut HashMap<Fruit, u32>) {
         // TODO: Insert new fruits if they are not already present in the
         // basket. Note that you are not allowed to put any type of fruit that's
         // already present!
+        if !basket.contains_key(&fruit) {
+            basket.insert(fruit, 1);
+        }
     }
+
+    let total: u32 = basket.values().sum();
+    while basket.values().sum::<u32>() <= 11 {
+    *basket.get_mut(&Fruit::Pineapple).unwrap() += 1;
+    }
+
 }
 
 #[cfg(test)]
@@ -90,4 +99,10 @@ mod tests {
             assert_ne!(amount, &0);
         }
     }
+}
+
+fn main() {
+    let mut basket: HashMap<Fruit, u32> = HashMap::new();
+    fruit_basket(&mut basket);
+    println!("{:#?}",basket);
 }
