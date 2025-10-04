@@ -15,6 +15,7 @@ pub fn factorial(num: u64) -> u64 {
     // For an extra challenge, don't use:
     // - recursion
     // Execute `rustlings hint iterators4` for hints.
+    (1..=num).product()
 }
 
 #[cfg(test)]
@@ -39,4 +40,11 @@ mod tests {
     fn factorial_of_4() {
         assert_eq!(24, factorial(4));
     }
+}
+
+fn main() {
+    println!("0! = {}", factorial(0));
+    println!("1! = {}", factorial(1));
+    println!("2! = {}", factorial(2));
+    println!("4! = {}", factorial(4));
 }
