@@ -41,3 +41,20 @@ mod tests {
         );
     }
 }
+
+fn main() {
+    let name_1 = "".to_string();
+    let name_2 = "Jack".to_string();
+
+    let res1 = generate_nametag_text(name_1);
+    let res2 = generate_nametag_text(name_2);
+
+    if let Some(val) = res1 {
+        println!("{:?}", val);
+    }
+
+    if let Some(val) = res2 {
+        println!("{:?}",val)
+    }
+
+}
