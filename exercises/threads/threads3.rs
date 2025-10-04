@@ -26,26 +26,31 @@ impl Queue {
     }
 }
 
-fn send_tx(q: Queue, tx: mpsc::Sender<u32>) -> () {
+fn send_tx(q: Queue, tx: mpsc::Sender<u32>) -> Vec<thread::JoinHandle<()>> {
     let qc = Arc::new(q);
     let qc1 = Arc::clone(&qc);
     let qc2 = Arc::clone(&qc);
 
-    thread::spawn(move || {
+    // 为每个线程单独 clone 一个 tx
+    let tx1 = tx.clone();
+    let handle1 = thread::spawn(move || {
         for val in &qc1.first_half {
             println!("sending {:?}", val);
-            tx.send(*val).unwrap();
+            tx1.send(*val).unwrap();
             thread::sleep(Duration::from_secs(1));
         }
     });
 
-    thread::spawn(move || {
+    let tx2 = tx.clone();
+    let handle2 = thread::spawn(move || {
         for val in &qc2.second_half {
             println!("sending {:?}", val);
-            tx.send(*val).unwrap();
+            tx2.send(*val).unwrap();
             thread::sleep(Duration::from_secs(1));
         }
     });
+
+    vec![handle1, handle2]
 }
 
 fn main() {
@@ -53,7 +58,9 @@ fn main() {
     let queue = Queue::new();
     let queue_length = queue.length;
 
-    send_tx(queue, tx);
+    // 这里 clone 一份 tx 给 send_tx，这样 main 里的 tx 依然存在
+    let handles = send_tx(queue, tx.clone());
+    drop(tx); // 关闭主线程的发送端，确保 rx 能够结束
 
     let mut total_received: u32 = 0;
     for received in rx {
@@ -61,6 +68,11 @@ fn main() {
         total_received += 1;
     }
 
+    for handle in handles {
+        handle.join().unwrap();
+    }
+
     println!("total numbers received: {}", total_received);
-    assert_eq!(total_received, queue_length)
+    assert_eq!(total_received, queue_length);
 }
+
