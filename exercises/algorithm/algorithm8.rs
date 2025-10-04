@@ -58,6 +58,12 @@ pub struct myStack<T>
 	q2:Queue<T>
 }
 impl<T> myStack<T> {
+     pub fn new() -> Self {
+        myStack {
+            q1: Queue::new(),
+            q2: Queue::new(),
+        }
+    }
     pub fn push(&mut self, elem: T) {
         // q2 先入新元素
         self.q2.enqueue(elem);
@@ -72,8 +78,9 @@ impl<T> myStack<T> {
     }
 
     pub fn pop(&mut self) -> Result<T, &str> {
-        self.q1.dequeue()
+        self.q1.dequeue().map_err(|_| "Stack is empty")
     }
+
 
     pub fn is_empty(&self) -> bool {
         self.q1.is_empty()

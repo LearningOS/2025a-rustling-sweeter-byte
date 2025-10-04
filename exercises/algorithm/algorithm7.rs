@@ -30,9 +30,14 @@ impl<T> Stack<T> {
 		self.size += 1;
 	}
 	fn pop(&mut self) -> Option<T> {
-		// TODO
-		None
+    	if self.size == 0 {
+        	None
+    	} else {
+        	self.size -= 1;
+        	self.data.pop()
+    	}
 	}
+
 	fn peek(&self) -> Option<&T> {
 		if 0 == self.size {
 			return None;

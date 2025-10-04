@@ -3,7 +3,7 @@
 	This problem requires you to implement a basic interface for a binary tree
 */
 
-use std::cmp::Ordering;
+//use std::cmp::Ordering;
 use std::fmt::Debug;
 
 
@@ -38,10 +38,11 @@ where
     }
 }
 
-impl<T> BinarySearchTree<T>
-where
-    T: Ord,
-{
+impl<T: Ord> BinarySearchTree<T> {
+    fn new() -> Self {
+        Self { root: None }
+    }
+
     fn insert(&mut self, value: T) {
         match self.root {
             Some(ref mut node) => node.insert(value),

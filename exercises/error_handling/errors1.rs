@@ -10,12 +10,12 @@
 // hint.
 
 
-pub fn generate_nametag_text(name: String) -> Option<String> {
+pub fn generate_nametag_text(name: String) -> Result<String, String> {
     if name.is_empty() {
         // Empty names aren't allowed.
-        None
+        Err("`name` was empty; it must be nonempty.".into())
     } else {
-        Some(format!("Hi! My name is {}", name))
+        Ok(format!("Hi! My name is {}", name))
     }
 }
 
@@ -48,12 +48,17 @@ fn main() {
     let res1 = generate_nametag_text(name_1);
     let res2 = generate_nametag_text(name_2);
 
-    if let Some(val) = res1 {
+    // 匹配 Result
+    if let Ok(val) = res1 {
         println!("{:?}", val);
+    } else if let Err(err) = res1 {
+        println!("Error: {:?}", err);
     }
 
-    if let Some(val) = res2 {
-        println!("{:?}",val)
+    if let Ok(val) = res2 {
+        println!("{:?}", val);
+    } else if let Err(err) = res2 {
+        println!("Error: {:?}", err);
     }
-
 }
+

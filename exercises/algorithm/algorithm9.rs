@@ -22,7 +22,7 @@ where
     pub fn new(comparator: fn(&T, &T) -> bool) -> Self {
         Self {
             count: 0,
-            items: vec![T::default()],
+            items: vec![T::default()], // 1-based index
             comparator,
         }
     }
@@ -32,12 +32,18 @@ where
     }
 
     pub fn is_empty(&self) -> bool {
-        self.len() == 0
+        self.count == 0
     }
 
     pub fn add(&mut self, value: T) {
-        self.items.push(value);
         self.count += 1;
+        
+        // 确保 items 有足够的空间
+        if self.count >= self.items.len() {
+            self.items.push(value);
+        } else {
+            self.items[self.count] = value;
+        }
 
         let mut idx = self.count;
         while idx > 1 {
@@ -50,12 +56,9 @@ where
             }
         }
     }
+
     fn parent_idx(&self, idx: usize) -> usize {
         idx / 2
-    }
-
-    fn children_present(&self, idx: usize) -> bool {
-        self.left_child_idx(idx) <= self.count
     }
 
     fn left_child_idx(&self, idx: usize) -> usize {
@@ -64,6 +67,10 @@ where
 
     fn right_child_idx(&self, idx: usize) -> usize {
         self.left_child_idx(idx) + 1
+    }
+
+    fn children_present(&self, idx: usize) -> bool {
+        self.left_child_idx(idx) <= self.count
     }
 
     fn smallest_child_idx(&self, idx: usize) -> usize {
@@ -76,6 +83,20 @@ where
             left
         } else {
             right
+        }
+    }
+
+    // 堆化下沉函数
+    fn heapify_down(&mut self, mut idx: usize) {
+        while self.children_present(idx) {
+            let child_idx = self.smallest_child_idx(idx);
+            
+            if (self.comparator)(&self.items[child_idx], &self.items[idx]) {
+                self.items.swap(idx, child_idx);
+                idx = child_idx;
+            } else {
+                break;
+            }
         }
     }
 }
@@ -97,7 +118,7 @@ where
 
 impl<T> Iterator for Heap<T>
 where
-    T: Default,
+    T: Default + Clone,
 {
     type Item = T;
 
@@ -106,21 +127,14 @@ where
             return None;
         }
 
-        let result = std::mem::replace(&mut self.items[1], T::default());
+        let result = self.items[1].clone();
         self.items.swap(1, self.count);
         self.count -= 1;
-
-        let mut idx = 1;
-        while self.children_present(idx) {
-            let child_idx = self.smallest_child_idx(idx);
-            if (self.comparator)(&self.items[child_idx], &self.items[idx]) {
-                self.items.swap(idx, child_idx);
-                idx = child_idx;
-            } else {
-                break;
-            }
+        
+        if self.count > 0 {
+            self.heapify_down(1);
         }
-
+        
         Some(result)
     }
 }
@@ -152,6 +166,7 @@ impl MaxHeap {
 #[cfg(test)]
 mod tests {
     use super::*;
+
     #[test]
     fn test_empty_heap() {
         let mut heap = MaxHeap::new::<i32>();

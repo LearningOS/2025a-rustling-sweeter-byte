@@ -28,11 +28,12 @@ struct LinkedList<T> {
     end: Option<NonNull<Node<T>>>,
 }
 
-impl<T> Default for LinkedList<T> {
+impl<T: Ord + Clone> Default for LinkedList<T> {
     fn default() -> Self {
         Self::new()
     }
 }
+
 
 impl<T: Ord + Clone> LinkedList<T> {
     pub fn new() -> Self {

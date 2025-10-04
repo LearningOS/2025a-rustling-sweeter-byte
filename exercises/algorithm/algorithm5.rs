@@ -12,12 +12,23 @@ struct Graph {
 }
 
 impl Graph {
+    fn new(size: usize) -> Self {
+        Self {
+            adj: vec![vec![]; size],
+        }
+    }
+
+    fn add_edge(&mut self, u: usize, v: usize) {
+        self.adj[u].push(v);
+        self.adj[v].push(u); // 如果是无向图
+    }
+
+    //  bfs_with_return 方法
     fn bfs_with_return(&self, start: usize) -> Vec<usize> {
         let mut visited = vec![false; self.adj.len()];
-        let mut queue = VecDeque::new();
+        let mut queue = std::collections::VecDeque::new();
         let mut visit_order = vec![];
 
-        // 开始节点入队
         visited[start] = true;
         queue.push_back(start);
 
@@ -35,6 +46,7 @@ impl Graph {
         visit_order
     }
 }
+
 
 
 
