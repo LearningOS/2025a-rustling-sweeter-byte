@@ -23,7 +23,7 @@ impl Licensed for SomeSoftware {}
 impl Licensed for OtherSoftware {}
 
 // YOU MAY ONLY CHANGE THE NEXT LINE
-fn compare_license_types(software: ??, software_two: ??) -> bool {
+fn compare_license_types<T: Licensed, U: Licensed>(software: T, software_two: U) -> bool {
     software.licensing_info() == software_two.licensing_info()
 }
 
@@ -46,4 +46,11 @@ mod tests {
 
         assert!(compare_license_types(other_software, some_software));
     }
+}
+
+fn main() {
+    let s1 = SomeSoftware {};
+    let s2 = OtherSoftware {};
+
+    println!("License info same? {}", compare_license_types(s1, s2));
 }

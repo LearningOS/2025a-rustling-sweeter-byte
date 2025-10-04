@@ -11,7 +11,9 @@
 // I AM NOT DONE
 
 pub trait Licensed {
-    fn licensing_info(&self) -> String;
+    fn licensing_info(&self) -> String{
+        String::from("Some information")
+    }
 }
 
 struct SomeSoftware {
@@ -24,6 +26,17 @@ struct OtherSoftware {
 
 impl Licensed for SomeSoftware {} // Don't edit this line
 impl Licensed for OtherSoftware {} // Don't edit this line
+
+fn main() {
+    let some_software = SomeSoftware { version_number: 1 };
+    let other_software = OtherSoftware {
+        version_number: "v2.0.0".to_string(),
+    };
+
+    println!("SomeSoftware licensing info: {}", some_software.licensing_info());
+    println!("OtherSoftware licensing info: {}", other_software.licensing_info());
+}
+
 
 #[cfg(test)]
 mod tests {
