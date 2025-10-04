@@ -12,6 +12,12 @@
 mod tests {
     #[test]
     fn you_can_assert_eq() {
-        assert_eq!();
+        assert_eq!(2 + 2, 4);
+    }
+}
+
+fn main() {
+    if 2 + 2 == 4 {
+        println!("Yes");
     }
 }

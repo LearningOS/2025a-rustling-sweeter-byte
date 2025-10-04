@@ -16,6 +16,27 @@
 mod tests {
     #[test]
     fn you_can_assert() {
-        assert!();
+        assert!(true);
+    }
+}
+
+fn main() {
+    let condition = true;
+
+    if condition {
+        println!("Assertion passed!");
+    } else {
+        println!("Assertion failed!");
+        // 模拟 panic，类似 assert! 宏
+        panic!("Assertion failed!");
+    }
+
+    // 你可以改成 false 来模拟失败
+    let condition2 = false;
+    if condition2 {
+        println!("Second assertion passed!");
+    } else {
+        println!("Second assertion failed!");
+        panic!("Second assertion failed!");
     }
 }

@@ -35,11 +35,17 @@ extern "Rust" {
 }
 
 mod Foo {
-    // No `extern` equals `extern "Rust"`.
-    fn my_demo_function(a: u32) -> u32 {
+    #[no_mangle]                // 禁止符号修饰
+    pub extern "Rust" fn my_demo_function(a: u32) -> u32 {
         a
     }
+
+    #[no_mangle]
+    pub extern "Rust" fn my_demo_function_alias(a: u32) -> u32 {
+        my_demo_function(a)    // 调用原函数
+    }
 }
+
 
 #[cfg(test)]
 mod tests {
