@@ -59,25 +59,28 @@ pub struct myStack<T>
 	q2:Queue<T>
 }
 impl<T> myStack<T> {
-    pub fn new() -> Self {
-        Self {
-			//TODO
-			q1:Queue::<T>::new(),
-			q2:Queue::<T>::new()
-        }
-    }
     pub fn push(&mut self, elem: T) {
-        //TODO
+        // q2 先入新元素
+        self.q2.enqueue(elem);
+
+        // 再把 q1 中的元素全部转移到 q2
+        while let Ok(val) = self.q1.dequeue() {
+            self.q2.enqueue(val);
+        }
+
+        // 交换 q1 和 q2
+        std::mem::swap(&mut self.q1, &mut self.q2);
     }
+
     pub fn pop(&mut self) -> Result<T, &str> {
-        //TODO
-		Err("Stack is empty")
+        self.q1.dequeue()
     }
+
     pub fn is_empty(&self) -> bool {
-		//TODO
-        true
+        self.q1.is_empty()
     }
 }
+
 
 #[cfg(test)]
 mod tests {

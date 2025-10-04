@@ -35,7 +35,7 @@ impl<T> Default for LinkedList<T> {
     }
 }
 
-impl<T> LinkedList<T> {
+impl<T: Ord + Clone> LinkedList<T> {
     pub fn new() -> Self {
         Self {
             length: 0,
@@ -69,15 +69,36 @@ impl<T> LinkedList<T> {
             },
         }
     }
-	pub fn merge(list_a:LinkedList<T>,list_b:LinkedList<T>) -> Self
-	{
-		//TODO
-		Self {
-            length: 0,
-            start: None,
-            end: None,
+	pub fn merge(mut list_a: LinkedList<T>, mut list_b: LinkedList<T>) -> Self {
+        let mut merged = LinkedList::new();
+
+        let mut index_a = 0;
+        let mut index_b = 0;
+
+        while index_a < list_a.length as i32 && index_b < list_b.length as i32 {
+            let val_a = list_a.get(index_a).unwrap();
+            let val_b = list_b.get(index_b).unwrap();
+            if val_a <= val_b {
+                merged.add((*val_a).clone());
+                index_a += 1;
+            } else {
+                merged.add((*val_b).clone());
+                index_b += 1;
+            }
         }
-	}
+
+        while index_a < list_a.length as i32 {
+            merged.add((*list_a.get(index_a).unwrap()).clone());
+            index_a += 1;
+        }
+
+        while index_b < list_b.length as i32 {
+            merged.add((*list_b.get(index_b).unwrap()).clone());
+            index_b += 1;
+        }
+
+        merged
+    }
 }
 
 impl<T> Display for LinkedList<T>
